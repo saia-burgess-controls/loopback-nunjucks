@@ -1,0 +1,8 @@
+{
+    "../../../index.js": {
+        "exposeAt": "loopback-nunjucks-test",
+        "excludePackages": [
+            "testing-excludes"
+        ]
+    }
+}

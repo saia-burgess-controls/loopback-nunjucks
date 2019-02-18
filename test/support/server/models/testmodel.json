@@ -1,0 +1,17 @@
+{
+    "name": "Testmodel",
+    "base": "Model",
+    "properties": {
+        "test": {
+            "type": "string",
+            "options": {
+                "halo": {}
+            }
+        }
+    },
+    "options":{
+        "cacheOptions": {
+            "thing": "halo"
+        }
+    }
+}
