@@ -67,6 +67,19 @@ module.exports = class LoopbackNunjucks {
         });
     }
 
+    /**
+     * Adds all extensions given in the passed object.
+     *
+     * The object should be of the form:
+     * {
+     *     extensionName: {
+     *         extension: nunjucksExtension,
+     *         options: {}
+     *     }
+     * }
+     *
+     * @param {object} filters
+     */
     addExtensions(extensions = {}) {
         Object
             .entries(extensions)
@@ -143,6 +156,14 @@ module.exports = class LoopbackNunjucks {
         });
     }
 
+    /**
+     * Creates a fully configured Nunjucks environment.
+     *
+     * This method creates a template loader for each package and registers all
+     * registered filters and extensions.
+     *
+     * @return {nunjucks.Environment}
+     */
     createEnvironment() {
         const excludedPackages = this.options.excludePackages || [];
         const filteredPackages = Array.from(this.packages.values())
@@ -167,6 +188,12 @@ module.exports = class LoopbackNunjucks {
         return environment;
     }
 
+    /**
+     * Adds all filters contained within a collection of packages to the environment.
+     *
+     * @param {nunjucks.Environment} environment
+     * @param {Array} packages
+     */
     addFiltersToEnvironment(environment, packages) {
         packages.forEach(({ name, filters = {} }) => {
             Object.entries(filters).forEach(([name, config]) => {
@@ -175,7 +202,19 @@ module.exports = class LoopbackNunjucks {
             });
         });
     }
-
+    /**
+     * Adds a single filter to the passed environment.
+     *
+     * @param {nunjucks.Environment} environment
+     * @param {string} filterName
+     * @param {object} config
+     * @param {function} config.filter - the nunjucks filter function
+     * @param {object} [config.options] - filter options (currently only containing isAsync
+     * @param {object} [options] - options respected by the component (for future usage)
+     * @param {string} [options.source] - source of the extension (for error messages)
+     *
+     * @return void
+     */
     addFilterToEnvironment(environment, filterName, { filter, options = {}}, { source = '' } = {}) {
         let err = null;
         try {
@@ -191,6 +230,13 @@ module.exports = class LoopbackNunjucks {
         environment.addFilter(filterName, filter, options.isAsync);
     }
 
+    /**
+     * Adds all extensions contained in the collection of packages to the passed environment
+     *
+     *
+     * @param {nunjucks.Environment} environment
+     * @param {array} packages
+     */
     addExtensionsToEnvironment(environment, packages) {
         packages.forEach(({ name, extensions = {} }) => {
             Object.entries(extensions).forEach(([name, config]) => {
@@ -200,6 +246,20 @@ module.exports = class LoopbackNunjucks {
         });
     }
 
+    /**
+     * Adds a single extension to the passed environment.
+     *
+     *
+     * @param {nunjucks.Environment} environment
+     * @param {string} extensionName
+     * @param {object} config
+     * @param {object} config.extension - the Nunjucks extension
+     * @param {object} [config.options] - options for future usage
+     * @param {object} [options] - options for the component
+     * @param {string} [options.source] - source of the extension (for error messages)
+     *
+     * @return void
+     */
     addExtensionToEnvironment(environment, extensionName, { extension, options = {}}, { source = '' }) {
         if (environment.hasExtension(extensionName)) {
             const msg = `The extension "${extensionName}" exposed by "${source}" is already defined`;
@@ -208,6 +268,13 @@ module.exports = class LoopbackNunjucks {
         environment.addExtension(extensionName, extension);
     }
 
+    /**
+     * Compares the dependencies of the registered packages to the extensions and filters
+     * registered at the environment and the packages of the component.
+     *
+     * @param {nunjucks.Environment} environment
+     * @param {array} registeredPackages
+     */
     ensureDependencies(environment, registeredPackages = []) {
         registeredPackages.forEach(({ name, dependencies = {}}) => {
             const {
