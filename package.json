@@ -29,6 +29,7 @@
   "homepage": "https://github.com/joinbox/loopback-nunjucks#readme",
   "devDependencies": {
     "@joinbox/eslint-config-joinbox": "^1.0.8",
+    "@joinbox/loopback-microservice": "^1.2.1",
     "chai": "^4.2.0",
     "cheerio": "^1.0.0-rc.2",
     "eslint": "^4.19.1",
@@ -36,7 +37,6 @@
     "nyc": "^13.3.0"
   },
   "dependencies": {
-    "@joinbox/loopback-microservice": "^1.2.1",
     "nunjucks": "^3.1.7"
   }
 }
