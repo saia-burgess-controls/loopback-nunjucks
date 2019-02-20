@@ -114,7 +114,7 @@ describe('The LoopbackNunjucks class', () => {
                     filter(argument, callback) {},
                     options: {
                         isAsync: true,
-                    }
+                    },
                 },
                 filterTwo: {
                     filter: (argument1, argument2) => {},
@@ -139,8 +139,8 @@ describe('The LoopbackNunjucks class', () => {
             const extensionName = 'test-extension';
             expect(this.component.hasExtension(extensionName)).to.equal(false);
             this.component.addExtension(extensionName, {
-                parse(parser, nodes, lexer){},
-                run(context){},
+                parse(parser, nodes, lexer) {},
+                run(context) {},
             });
             expect(this.component.hasExtension(extensionName)).to.equal(true);
         });
@@ -164,8 +164,8 @@ describe('The LoopbackNunjucks class', () => {
             const extensionName = 'test-extension';
             expect(this.component.hasExtension(extensionName)).to.equal(false);
             this.component.addExtension(extensionName, {
-                parse(){},
-                run(){},
+                parse() {},
+                run() {},
             });
             expect(this.component.hasExtension(extensionName)).to.equal(true);
         });
@@ -253,10 +253,10 @@ describe('The LoopbackNunjucks class', () => {
                 name: 'testPackage1',
                 filters: {
                     testFilter1: {
-                        filter(){},
+                        filter() {},
                     },
                     testFilter2: {
-                        filter(){},
+                        filter() {},
                     },
                 },
             };
@@ -264,7 +264,7 @@ describe('The LoopbackNunjucks class', () => {
                 name: 'testPackage2',
                 filters: {
                     testFilter3: {
-                        filter(){},
+                        filter() {},
                         options: {
                             isAsync: true,
                         },
@@ -420,7 +420,7 @@ describe('The LoopbackNunjucks class', () => {
                 {
                     name,
                     dependencies: {
-                        filters: [ dependencyName ],
+                        filters: [dependencyName],
                     },
                 },
             ];
@@ -436,7 +436,7 @@ describe('The LoopbackNunjucks class', () => {
                 {
                     name,
                     dependencies: {
-                        extensions: [ dependencyName ],
+                        extensions: [dependencyName],
                     },
                 },
             ];
@@ -452,7 +452,7 @@ describe('The LoopbackNunjucks class', () => {
                 {
                     name,
                     dependencies: {
-                        packages: [ dependencyName ],
+                        packages: [dependencyName],
                     },
                 },
             ];
@@ -475,7 +475,7 @@ describe('The LoopbackNunjucks class', () => {
                 name: 'testingPackage2',
                 filters: {
                     filter2: {
-                        filter(){},
+                        filter() {},
                     },
                 },
                 dependencies: {

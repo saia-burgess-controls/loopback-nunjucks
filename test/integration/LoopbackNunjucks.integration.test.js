@@ -15,7 +15,7 @@ describe('NunjucksLoopback integration', () => {
         expect(this.component).to.be.an.instanceof(LoopbackNunjucks);
     });
 
-    it('renders the base index', async function(){
+    it('renders the base index', async function() {
         const response = await this.service.api.get('/index/base');
         const content = cheerio.load(response.text);
         const title = content('h1');
@@ -23,7 +23,7 @@ describe('NunjucksLoopback integration', () => {
         expect(title.text()).to.equal('Index');
     });
 
-    it('renders the composed index', async function(){
+    it('renders the composed index', async function() {
         const response = await this.service.api.get('/index/composed');
         const content = cheerio.load(response.text);
 

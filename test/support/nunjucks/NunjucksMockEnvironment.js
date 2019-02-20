@@ -14,7 +14,7 @@ module.exports = class NunjucksMockEnvironment {
     }
 
     addFilter(name, filter, isAsync = false) {
-        this.filters.set(name, {filter, isAsync});
+        this.filters.set(name, { filter, isAsync });
     }
 
     hasExtension(name) {

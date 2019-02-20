@@ -1,7 +1,2 @@
-module.exports = (Testmodel) => {
-
-    Testmodel.renderIndex = function(req, res) {
-
-    };
-
-};
+// eslint-disable-next-line no-unused-vars
+module.exports = (Testmodel) => {};

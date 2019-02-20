@@ -1,3 +1,1 @@
-module.exports = (elements = [], separator = '|')=> {
-    return elements.join(separator);
-};
+module.exports = (elements = [], separator = '|') => elements.join(separator);

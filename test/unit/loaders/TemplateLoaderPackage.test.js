@@ -10,7 +10,7 @@ describe('The TemplateLoaderPackage', () => {
     before('setup loader', function() {
         this.pkg = new TestingPackage();
         this.loader = new TemplateLoaderPackage(this.pkg, {});
-    })
+    });
 
     it('exports a class', () => {
         expect(TemplateLoaderPackage).to.be.a('function');
@@ -26,11 +26,11 @@ describe('The TemplateLoaderPackage', () => {
         function(done) {
             const fullPath = path.resolve(this.pkg.templatePath, './index.njk');
             this.loader.getSource('testingBase/index.njk', (err, result) => {
-                if(err) return done(err);
+                if (err) return done(err);
                 expect(result).to.have.property('noCache', false);
                 expect(result).to.have.property('path', fullPath);
                 expect(result).to.have.property('src').that.contains('<h1>Index</h1>');
-                done();
+                return done();
             });
         },
     );
@@ -39,22 +39,22 @@ describe('The TemplateLoaderPackage', () => {
         'returns null if the template it does not exist (nunjucks default)',
         function(done) {
             this.loader.getSource('testingBase/unknown.njk', (err, result) => {
-                if(err) return done(err);
+                if (err) return done(err);
                 expect(result).to.equal(null);
-                done();
+                return done();
             });
-        }
+        },
     );
 
     it(
         'returns null if the template does not seem to belong to the package',
         function(done) {
             this.loader.getSource('fancyPackage/index.njk', (err, result) => {
-                if(err) return done(err);
+                if (err) return done(err);
                 expect(result).to.equal(null);
-                done();
+                return done();
             });
-        }
+        },
     );
 
     it(

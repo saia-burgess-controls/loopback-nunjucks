@@ -23,7 +23,7 @@ module.exports = class LoopbackNunjucks {
     addPackage(pkg) {
         const { name } = pkg;
 
-        if (this.packages.has(name)) {
+        if (this.hasPackage(name)) {
             throw new Error(`Package "${name}" is already registered.`);
         }
 
@@ -64,7 +64,7 @@ module.exports = class LoopbackNunjucks {
                     options,
                 } = filterConfig;
                 this.addFilter(filterName, filter, options);
-        });
+            });
     }
 
     /**
@@ -101,18 +101,18 @@ module.exports = class LoopbackNunjucks {
      */
     hasFilter(name) {
         return this.filters.has(name)
-            || Array.from(this.packages.values())
-                .some(({ filters = {}}) => {
-                    return Object.prototype.hasOwnProperty.call(filters, name);
-                });
+            || Array
+                .from(this.packages.values())
+                .some(({ filters = {} }) =>
+                    Object.prototype.hasOwnProperty.call(filters, name));
     }
 
     hasExtension(name) {
         return this.extensions.has(name)
-            || Array.from(this.packages.values())
-                .some(({ extensions = {}}) => {
-                    return Object.prototype.hasOwnProperty.call(extensions, name);
-                });
+            || Array
+                .from(this.packages.values())
+                .some(({ extensions = {} }) =>
+                    Object.prototype.hasOwnProperty.call(extensions, name));
     }
 
     /**
@@ -168,7 +168,7 @@ module.exports = class LoopbackNunjucks {
         const excludedPackages = this.options.excludePackages || [];
         const filteredPackages = Array.from(this.packages.values())
             .filter(({ name }) => !excludedPackages.includes(name));
-        const loaders = filteredPackages.map((pkg) => new TemplateLoaderPackage(pkg));
+        const loaders = filteredPackages.map(pkg => new TemplateLoaderPackage(pkg));
         const environment = new nunjucks.Environment(loaders, this.options.nunjucks);
 
         this.filters.forEach((config, name) => {
@@ -196,9 +196,9 @@ module.exports = class LoopbackNunjucks {
      */
     addFiltersToEnvironment(environment, packages) {
         packages.forEach(({ name, filters = {} }) => {
-            Object.entries(filters).forEach(([name, config]) => {
+            Object.entries(filters).forEach(([filterName, config]) => {
                 const source = `package ${name}`;
-                this.addFilterToEnvironment(environment, name, config, { source });
+                this.addFilterToEnvironment(environment, filterName, config, { source });
             });
         });
     }
@@ -215,10 +215,11 @@ module.exports = class LoopbackNunjucks {
      *
      * @return void
      */
-    addFilterToEnvironment(environment, filterName, { filter, options = {}}, { source = '' } = {}) {
+    addFilterToEnvironment(environment, filterName, { filter, options = {} }, { source = '' } = {}) {
         let err = null;
         try {
-            // there is no hasFilter method
+            // There is no hasFilter method and just adding the filter would override the existing
+            // filters.
             environment.getFilter(filterName);
         } catch (error) {
             err = error;
@@ -239,9 +240,9 @@ module.exports = class LoopbackNunjucks {
      */
     addExtensionsToEnvironment(environment, packages) {
         packages.forEach(({ name, extensions = {} }) => {
-            Object.entries(extensions).forEach(([name, config]) => {
+            Object.entries(extensions).forEach(([extensionName, config]) => {
                 const source = `package ${name}`;
-                this.addExtensionToEnvironment(environment, name, config, { source });
+                this.addExtensionToEnvironment(environment, extensionName, config, { source });
             });
         });
     }
@@ -260,7 +261,7 @@ module.exports = class LoopbackNunjucks {
      *
      * @return void
      */
-    addExtensionToEnvironment(environment, extensionName, { extension, options = {}}, { source = '' }) {
+    addExtensionToEnvironment(environment, extensionName, { extension, options = {} }, { source = '' }) {
         if (environment.hasExtension(extensionName)) {
             const msg = `The extension "${extensionName}" exposed by "${source}" is already defined`;
             throw new Error(msg);
@@ -276,7 +277,7 @@ module.exports = class LoopbackNunjucks {
      * @param {array} registeredPackages
      */
     ensureDependencies(environment, registeredPackages = []) {
-        registeredPackages.forEach(({ name, dependencies = {}}) => {
+        registeredPackages.forEach(({ name, dependencies = {} }) => {
             const {
                 filters = [],
                 extensions = [],

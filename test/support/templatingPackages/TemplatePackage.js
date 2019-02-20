@@ -12,7 +12,7 @@ module.exports = class TemplatePackage {
         assets,
         filters,
         extensions,
-        dependencies
+        dependencies,
     }) {
         this.name = name;
         this.prefix = prefix;

@@ -10,4 +10,5 @@ before('start microservice', async function() {
 
 after('stop microservice', async function() {
     if (this.service) return this.service.stop();
+    return null;
 });

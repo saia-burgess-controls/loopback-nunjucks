@@ -13,13 +13,13 @@ module.exports = class BaseTemplatePackage extends TemplatePackage {
             prefix: 'testingBase',
             templatePath: path.resolve(__dirname, 'views'),
             filters: {
-                'testingBaseCustomArrayJoin': {
+                testingBaseCustomArrayJoin: {
                     filter: joinFilter,
                     isAsync: false,
                 },
             },
             extensions: {
-                'testingBaseCustomTag': {
+                testingBaseCustomTag: {
                     extension: customTag,
                 },
             },
