@@ -3,6 +3,10 @@ const path = require('path');
 
 const { FileSystemLoader } = nunjucks;
 
+/**
+ * @todo: Switch from inheritance to composition to avoid naming collisions.
+ * @type {module.TemplateLoaderPackage}
+ */
 module.exports = class TemplateLoaderPackage extends FileSystemLoader {
 
     constructor(templatePackage, options = {}) {
