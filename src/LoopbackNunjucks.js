@@ -165,10 +165,9 @@ module.exports = class LoopbackNunjucks {
      * @return {nunjucks.Environment}
      */
     createEnvironment() {
-        const excludedPackages = this.options.excludePackages || [];
-        const filteredPackages = Array.from(this.packages.values())
-            .filter(({ name }) => !excludedPackages.includes(name));
-        const loaders = filteredPackages.map(pkg => new TemplateLoaderPackage(pkg));
+        const { excludePackages } = this.options;
+        const filteredPackages = this.filterExcludedPackages(this.packages, excludePackages);
+        const loaders = this.createLoadersFromPackages(filteredPackages, this.options.nunjucks);
         const environment = new nunjucks.Environment(loaders, this.options.nunjucks);
 
         this.filters.forEach((config, name) => {
@@ -186,6 +185,32 @@ module.exports = class LoopbackNunjucks {
         this.ensureDependencies(environment, filteredPackages);
 
         return environment;
+    }
+
+    /**
+     * Filters all packages within the given map that are within the collection of names to ignore.
+     *
+     * @param {Map<String, Object>} packages
+     * @param {Array<String>> } [excludedNames] - names of the packages to exclude
+     *
+     * @return {Array<Object>} - the filtered packages
+     */
+    filterExcludedPackages(packages, excludedNames = []) {
+        return Array
+            .from(packages.values())
+            .filter(({ name }) => !excludedNames.includes(name));
+    }
+
+    /**
+     * Creates loaders from an array of packages.
+     *
+     * @param {Array} packages
+     * @param {Object} [options] - options to be passed to the loaders
+     *
+     * @return {Array<TemplateLoaderPackage>}
+     */
+    createLoadersFromPackages(packages = [], options = {}) {
+        return packages.map(pkg => new TemplateLoaderPackage(pkg, options));
     }
 
     /**

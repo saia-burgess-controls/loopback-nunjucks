@@ -502,4 +502,29 @@ describe('The LoopbackNunjucks class', () => {
         });
 
     });
+
+    describe('LoopbackNunjucks.createLoadersFromPackages(packages = [], options = {})', () => {
+        before('setup instance', function() {
+            this.component = new LoopbackNunjucks();
+        });
+
+        it('takes an array of loaders and properly passes the (nunjucks) options', function() {
+            const packages = [
+                {
+                    name: 'testing',
+                    templatePath: '',
+                },
+            ];
+            const options = {
+                watch: true,
+                noCache: true,
+            };
+            const loaders = this.component.createLoadersFromPackages(packages, options);
+            expect(loaders).to.have.length(1);
+            // @note: we cannot test the watch property without installing the optional chokidar
+            // dependency
+            const [loader] = loaders;
+            expect(loader).to.have.property('noCache', true);
+        });
+    });
 });
