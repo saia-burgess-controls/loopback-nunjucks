@@ -14,8 +14,12 @@ module.exports = class TemplateLoaderPackage extends FileSystemLoader {
         } = templatePackage;
 
         const searchPaths = [templatePath];
+        const fsLoaderOptions = {
+            watch: options.watch === true,
+            noCache: options.noCache === true,
+        };
 
-        super(searchPaths, options);
+        super(searchPaths, fsLoaderOptions);
 
         this.name = name;
         this.packagePrefix = prefix || name;
