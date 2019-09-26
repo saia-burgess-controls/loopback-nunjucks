@@ -41,22 +41,21 @@ module.exports = class TemplateLoaderPackage extends FileSystemLoader {
      * @override
      *
      * @param {String} name - the name/path of the template including the package prefix
-     * @return {Object} result - see the documentation of the nunjucks file system loader
-     * @return {String} result.src
-     * @return {String} result.path
-     * @return {Boolean} result.noCache
+     * @param {Function} callback
+     * @return void
      */
     getSource(name, callback) {
         if (!this.templateBelongsToPackage(name)) {
-            return callback(null, null);
-        }
-        const relativeTemplatePath = this.getRelativeTemplatePath(name);
-        try {
-            // the nunjucks template loader is synchronous
-            const templateContent = super.getSource(relativeTemplatePath);
-            return callback(null, templateContent);
-        } catch (error) {
-            return callback(error);
+            setImmediate(() => callback(null, null));
+        } else {
+            const relativeTemplatePath = this.getRelativeTemplatePath(name);
+            try {
+                // the nunjucks template loader is synchronous
+                const templateContent = super.getSource(relativeTemplatePath);
+                setImmediate(() => callback(null, templateContent));
+            } catch (error) {
+                setImmediate(() => callback(error));
+            }
         }
     }
 
