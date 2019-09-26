@@ -1,6 +1,6 @@
 {
   "name": "@joinbox/loopback-nunjucks",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "Nunjucks integration component for Loopback 3.x.x applications with simple asset management. ",
   "main": "index.js",
   "scripts": {
@@ -35,7 +35,7 @@
     "mocha": "^5.2.0",
     "nyc": "^13.3.0"
   },
-  "dependencies": {
+  "dependencies": {:::::
     "nunjucks": "^3.2.0"
   }
 }
