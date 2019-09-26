@@ -28,7 +28,7 @@ module.exports = class TemplateLoaderPackage extends FileSystemLoader {
         this.name = name;
         this.packagePrefix = prefix || name;
         this.assets = assets;
-        // We removed the asynchronity since it lead to massive problems in our templates
+        // We removed the asynchronicity since it led to massive problems in our templates
         // this.async = true;
     }
 
