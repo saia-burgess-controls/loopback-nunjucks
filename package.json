@@ -1,6 +1,6 @@
 {
   "name": "@joinbox/loopback-nunjucks",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Nunjucks integration component for Loopback 3.x.x applications with simple asset management. ",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,6 @@
     "test:integration": "npm run test:base ./test/support/setup-integration.js ./test/integration",
     "test": "npm run test:base ./test/support/setup-integration.js ./test/unit ./test/integration",
     "test:coverage": "nyc npm test"
-
   },
   "repository": {
     "type": "git",
@@ -37,6 +36,6 @@
     "nyc": "^13.3.0"
   },
   "dependencies": {
-    "nunjucks": "^3.1.7"
+    "nunjucks": "^3.2.0"
   }
 }

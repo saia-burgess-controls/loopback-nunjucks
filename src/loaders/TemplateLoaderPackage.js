@@ -28,8 +28,8 @@ module.exports = class TemplateLoaderPackage extends FileSystemLoader {
         this.name = name;
         this.packagePrefix = prefix || name;
         this.assets = assets;
-        // we try to keep our loaders asynchronous
-        this.async = true;
+        // We removed the asynchronicity since it led to massive problems in our templates
+        // this.async = true;
     }
 
     /**
@@ -41,23 +41,15 @@ module.exports = class TemplateLoaderPackage extends FileSystemLoader {
      * @override
      *
      * @param {String} name - the name/path of the template including the package prefix
-     * @return {Object} result - see the documentation of the nunjucks file system loader
-     * @return {String} result.src
-     * @return {String} result.path
-     * @return {Boolean} result.noCache
+     * @param {Function} callback
+     * @return {*}
      */
-    getSource(name, callback) {
+    getSource(name) {
         if (!this.templateBelongsToPackage(name)) {
-            return callback(null, null);
+            return null;
         }
         const relativeTemplatePath = this.getRelativeTemplatePath(name);
-        try {
-            // the nunjucks template loader is synchronous
-            const templateContent = super.getSource(relativeTemplatePath);
-            return callback(null, templateContent);
-        } catch (error) {
-            return callback(error);
-        }
+        return super.getSource(relativeTemplatePath);
     }
 
     /**

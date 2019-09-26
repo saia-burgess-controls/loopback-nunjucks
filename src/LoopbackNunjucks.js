@@ -187,6 +187,11 @@ module.exports = class LoopbackNunjucks {
         return environment;
     }
 
+    getCurrentPackages() {
+        const { excludePackages } = this.options;
+        return this.filterExcludedPackages(this.packages, excludePackages);
+    }
+
     /**
      * Filters all packages within the given map that are within the collection of names to ignore.
      *
