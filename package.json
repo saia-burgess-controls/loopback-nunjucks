@@ -1,5 +1,5 @@
 {
-  "name": "@joinbox/loopback-nunjucks",
+  "name": "@maugli-sbc/loopback-nunjucks",
   "version": "1.0.0",
   "description": "Nunjucks integration component for Loopback 3.x.x applications with simple asset management. ",
   "main": "index.js",
